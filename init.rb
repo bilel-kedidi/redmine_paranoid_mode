@@ -10,5 +10,6 @@ end
 ActionDispatch::Callbacks.to_prepare do
   require 'redmine_paranoid_mode/patches/application_controller_patch'
   require 'redmine_paranoid_mode/patches/issue_patch'
+  require 'redmine_paranoid_mode/patches/time_entry_patch'
   require 'redmine_paranoid_mode/patches/issue_query_patch'
 end

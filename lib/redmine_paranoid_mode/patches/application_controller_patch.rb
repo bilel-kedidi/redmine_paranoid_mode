@@ -11,7 +11,7 @@ module RedmineParanoidMode
             # Issue.visible.find(...) can not be used to redirect user to the login form
             # if the issue actually exists but requires authentication
             if User.current.admin?
-              @issue = Issue.with_deleted.find(params[:id])
+              @issue = Issue.unscoped.find(params[:id])
             else
               @issue = Issue.find(params[:id])
             end
@@ -25,7 +25,7 @@ module RedmineParanoidMode
           # Raises a Unauthorized exception if one of the issues is not visible
           def find_issues
             if User.current.admin?
-              @issues = Issue.with_deleted.where(:id => (params[:id] || params[:ids])).preload(:project, :status, :tracker, :priority, :author, :assigned_to, :relations_to).to_a
+              @issues = Issue.unscoped.where(:id => (params[:id] || params[:ids])).preload(:project, :status, :tracker, :priority, :author, :assigned_to, :relations_to).to_a
             else
               @issues = Issue.where(:id => (params[:id] || params[:ids])).preload(:project, :status, :tracker, :priority, :author, :assigned_to, :relations_to).to_a
             end
