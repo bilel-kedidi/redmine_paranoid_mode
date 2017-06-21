@@ -31,6 +31,11 @@ module RedmineParanoidMode
       end
 
       module InstanceMethods
+
+        def deleted?
+          deleted_at.present?
+        end
+
         def destroy_with_no_effect
           self.deleted_at = Time.now
           time_entries.update_all({deleted_at: Time.now})
